@@ -2,16 +2,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://javaops.ru payload.xsd">
     <Users>
-        <User flag="active" city="kiv">
-            <email>gmail@gmail.com</email>
+        <User flag="active" city="kiv" email="gmail@gmail.com"
+              group="basejava1 basejava2 topjava1 topjava2 masterjava1 masterjava2">
             <fullName>Full Name</fullName>
         </User>
-        <User flag="superuser" city="spb">
-            <email>admin@javaops.ru</email>
+        <User flag="superuser" city="spb" email="admin@javaops.ru" group="topjava2">
             <fullName>Admin</fullName>
         </User>
-        <User flag="deleted" city="spb">
-            <email>mail@yandex.ru</email>
+        <User flag="deleted" city="spb" email="mail@yandex.ru" group="topjava2">
+            <fullName>Deleted</fullName>
+        </User>
+        <User flag="active" city="mnsk" email="mail2@yandex.ru" group="basejava1">
+            <fullName>Deleted</fullName>
+        </User>
+        <User flag="active" city="mnsk" email="mail3@yandex.ru">
             <fullName>Deleted</fullName>
         </User>
     </Users>
@@ -20,4 +24,26 @@
         <City id="kiv">Киев</City>
         <City id="mnsk">Минск</City>
     </Cities>
+    <Projects>
+        <Project id="basejava">
+            <name>BaseJava</name>
+            <description>This is description for course BaseJava</description>
+        </Project>
+        <Project id="topjava">
+            <name>TopJava</name>
+            <description>This is description for course TopJava</description>
+        </Project>
+        <Project id="masterjava">
+            <name>MasterJava</name>
+            <description>This is description for course MasterJava</description>
+        </Project>
+    </Projects>
+    <Groups>
+        <Group id="basejava1" project="basejava" type="FINISHED"/>
+        <Group id="basejava2" project="basejava" type="CURRENT"/>
+        <Group id="topjava1" project="topjava" type="FINISHED"/>
+        <Group id="topjava2" project="topjava" type="CURRENT"/>
+        <Group id="masterjava1" project="masterjava" type="FINISHED"/>
+        <Group id="masterjava2" project="masterjava" type="REGISTERING"/>
+    </Groups>
 </Payload>
