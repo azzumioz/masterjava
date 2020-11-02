@@ -20,7 +20,7 @@ public class UserProcessor {
     private static final JaxbParser jaxbParser = new JaxbParser(ObjectFactory.class);
     private static UserDao userDao = DBIProvider.getDao(UserDao.class);
 
-    public List<User> process(final InputStream is) throws XMLStreamException, JAXBException {
+    public List<User> process(final InputStream is, int chunkSize) throws XMLStreamException, JAXBException {
         final StaxStreamProcessor processor = new StaxStreamProcessor(is);
         List<User> users = new ArrayList<>();
 
@@ -30,12 +30,8 @@ public class UserProcessor {
             final User user = new User(xmlUser.getValue(), xmlUser.getEmail(), UserFlag.valueOf(xmlUser.getFlag().value()));
             users.add(user);
         }
-        addUsersToDb(users);
+        DBIProvider.getDBI().useTransaction((conn, status) -> userDao.insertBatchGeneratedId(users, chunkSize));
         return users;
     }
 
-    private void addUsersToDb (List<User> userList) {
-        int batchSize = 3;
-        DBIProvider.getDBI().useTransaction((conn, status) -> userDao.insertBatchGeneratedId(userList, batchSize));
-    }
 }
