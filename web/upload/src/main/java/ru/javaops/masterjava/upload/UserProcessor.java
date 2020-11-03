@@ -1,5 +1,6 @@
 package ru.javaops.masterjava.upload;
 
+import one.util.streamex.IntStreamEx;
 import ru.javaops.masterjava.persist.DBIProvider;
 import ru.javaops.masterjava.persist.dao.UserDao;
 import ru.javaops.masterjava.persist.model.User;
@@ -30,8 +31,11 @@ public class UserProcessor {
             final User user = new User(xmlUser.getValue(), xmlUser.getEmail(), UserFlag.valueOf(xmlUser.getFlag().value()));
             users.add(user);
         }
-        DBIProvider.getDBI().useTransaction((conn, status) -> userDao.insertBatchGeneratedId(users, chunkSize));
-        return users;
+        int[] result = userDao.insertBatchGeneratedId(users, chunkSize);
+        return IntStreamEx.range(0, users.size())
+                .filter(i -> result[i] == 0)
+                .mapToObj(users::get)
+                .toList();
     }
 
 }

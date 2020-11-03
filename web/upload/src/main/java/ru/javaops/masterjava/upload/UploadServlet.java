@@ -47,10 +47,10 @@ public class UploadServlet extends HttpServlet {
                     throw new IllegalStateException("Upload file have not been selected");
                 }
                 try (InputStream is = filePart.getInputStream()) {
-                    List<User> users = userProcessor.process(is, chunkSize);
+                    List<User> alreadyPresentUsers = userProcessor.process(is, chunkSize);
                     final WebContext webContext =
                             new WebContext(req, resp, req.getServletContext(), req.getLocale(),
-                                    ImmutableMap.of("users", users));
+                                    ImmutableMap.of("users", alreadyPresentUsers));
                     engine.process("result", webContext, resp.getWriter());
                     return;
                 }
