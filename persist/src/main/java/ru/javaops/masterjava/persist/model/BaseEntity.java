@@ -7,6 +7,8 @@ import lombok.*;
 @ToString
 abstract public class BaseEntity {
 
+    public static final int START_SEQ = 100000;
+
     @Getter
     @Setter
     protected Integer id;
